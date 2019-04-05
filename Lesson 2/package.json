@@ -1,0 +1,27 @@
+{
+  "name": "lesson-2",
+  "version": "1.0.0",
+  "description": "gulp lessons",
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Deepa Kiwne",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^6.0.0"
+  },
+  "dependencies": {
+    "browser-sync": "^2.26.3",
+    "gulp-eslint": "^5.0.0",
+    "gulp-jasmine-browser": "^4.1.0",
+    "gulp-sass": "^4.0.2",
+    "jasmine-core": "^3.4.0",
+    "puppeteer": "^1.14.0"
+  }
+}

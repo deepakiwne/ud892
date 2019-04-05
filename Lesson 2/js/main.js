@@ -1,5 +1,6 @@
 (function() {
 
-	foo = 1;
+	var foo = 1234;
+	return foo;
 
 })();

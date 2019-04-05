@@ -12,7 +12,7 @@ const uglify = require('gulp-uglify');
 gulp.task(
 	'default',
 	['copy-html', 'copy-images', 'styles', 'lint', 'scripts'],
-	function() {
+	async function() {
 		gulp.watch('sass/**/*.scss', ['styles']);
 		gulp.watch('js/**/*.js', ['lint']);
 		gulp.watch('/index.html', ['copy-html']);
@@ -32,14 +32,14 @@ gulp.task('dist', [
 	'scripts-dist'
 ]);
 
-gulp.task('scripts', function() {
+gulp.task('scripts', async function() {
 	gulp
 		.src('js/**/*.js')
 		.pipe(concat('all.js'))
 		.pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('scripts-dist', function() {
+gulp.task('scripts-dist', async function() {
 	gulp
 		.src('js/**/*.js')
 		.pipe(concat('all.js'))
@@ -47,15 +47,15 @@ gulp.task('scripts-dist', function() {
 		.pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('copy-html', function() {
+gulp.task('copy-html', async function() {
 	gulp.src('./index.html').pipe(gulp.dest('./dist'));
 });
 
-gulp.task('copy-images', function() {
+gulp.task('copy-images', async function() {
 	gulp.src('img/*').pipe(gulp.dest('dist/img'));
 });
 
-gulp.task('styles', function() {
+gulp.task('styles', async function() {
 	gulp
 		.src('sass/**/*.scss')
 		.pipe(
@@ -72,7 +72,7 @@ gulp.task('styles', function() {
 		.pipe(browserSync.stream());
 });
 
-gulp.task('lint', function() {
+gulp.task('lint', async function() {
 	return (
 		gulp
 			.src(['js/**/*.js'])
@@ -88,16 +88,16 @@ gulp.task('lint', function() {
 	);
 });
 
-gulp.task('tests', function() {
-	return gulp
-		.src('tests/spec/extraSpec.js')
-		.pipe(jasmineBrowser.specRunner({ console: true }))
-		.pipe(jasmineBrowser.headless({ driver: 'chrome' }));
-});
-
-// gulp.task('tests', function() {
-// 	gulp
+// gulp.task('tests', async function() {
+// 	return gulp
 // 		.src('tests/spec/extraSpec.js')
-// 		.pipe(jasmineBrowser.specRunner())
-// 		.pipe(jasmineBrowser.server({ port: 3001 }));
+// 		.pipe(jasmineBrowser.specRunner({ console: false }))
+// 		.pipe(jasmineBrowser.headless({ driver: 'chrome' }));
 // });
+
+gulp.task('tests', async function() {
+	gulp
+		.src('tests/spec/extraSpec.js')
+		.pipe(jasmineBrowser.specRunner())
+		.pipe(jasmineBrowser.server({ port: 3001 }));
+});
