@@ -8,6 +8,9 @@ const eslint = require('gulp-eslint');
 const jasmineBrowser = require('gulp-jasmine-browser');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
+var sourcemaps = require('gulp-sourcemaps');
+var imagemin = require('gulp-imagemin');
+var pngquant = require('imagemin-pngquant');
 
 gulp.task(
 	'default',
@@ -29,7 +32,8 @@ gulp.task('dist', [
 	'copy-images',
 	'styles',
 	'lint',
-	'scripts-dist'
+	'scripts-dist',
+	'img-min'
 ]);
 
 gulp.task('scripts', async function() {
@@ -42,8 +46,10 @@ gulp.task('scripts', async function() {
 gulp.task('scripts-dist', async function() {
 	gulp
 		.src('js/**/*.js')
+		.pipe(sourcemaps.init())
 		.pipe(concat('all.js'))
 		.pipe(uglify())
+		.pipe(sourcemaps.write())
 		.pipe(gulp.dest('dist/js'));
 });
 
@@ -86,6 +92,15 @@ gulp.task('lint', async function() {
 			// lint error, return the stream and pipe to failOnError last.
 			.pipe(eslint.failOnError())
 	);
+});
+
+gulp.task('img-min', async function() {
+    return gulp.src('src/images/*')
+        .pipe(imagemin({
+            progressive: true,
+            use: [pngquant()]
+        }))
+        .pipe(gulp.dest('dist/images'));
 });
 
 // gulp.task('tests', async function() {
